@@ -1,22 +1,15 @@
-const webpack = require('webpack')
-const merge = require('webpack-merge')
-const path = require('path')
+const webpack = require('webpack');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const isProduction = process.env.NODE_ENV === 'production';
-const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin')
-const VueLoaderPlugin = require('vue-loader/lib/plugin')
-const webpackConfig = require('webpack')
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
-const config = {
+const path = require('path')
+let config = {
   mode: isProduction ? 'production' : 'development',
-  entry: {
-    app: './src/main.js'
-  },
   resolve: {
     alias: {
+      'vue$': 'vue/dist/vue.esm.js',
       '@': path.resolve(__dirname, './src'),
-      'vue$': 'vue/dist/vue.esm.js'
     },
-    extensions: ['*', '.js', '.vue', '.json'],
+    extensions: ['*', '.js', '.vue', '.json']
   },
   module: {
     rules: [
@@ -42,29 +35,17 @@ const config = {
       {
         test: /\.(woff|woff2|ttf|eot|otf)([\?]?.*)$/,
         loader: 'file-loader?name=assets/fonts/[name].[ext]',
-      },
-      {
-        test: /\.s(c|a)ss$/,
-        use: [
-          'vue-style-loader',
-          'css-loader',
-          {
-            loader: 'sass-loader',
-            options: {
-              implementation: require('sass')
-            },
-          },
-        ],
-      },
+      }
     ],
   },
-
   plugins: [
     new VueLoaderPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
     }),
-    new VuetifyLoaderPlugin(),
-  ]
-}
-module.exports = config
+  ],
+};
+
+
+
+module.exports = config;
