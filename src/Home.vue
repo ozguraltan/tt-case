@@ -1,9 +1,8 @@
 <template>
-  <v-container>
+  <v-container class="pt-7">
     <v-row>
-      <v-col>
-        <h1>Merhaba Janım! </h1>
-        <v-btn color="accent" class="app-black--text">Hello World</v-btn>
+      <v-col cols="12">
+        <h1 class="text-h6">{{ $t('productListPageTitle')}} </h1>
       </v-col>
     </v-row>
   </v-container>

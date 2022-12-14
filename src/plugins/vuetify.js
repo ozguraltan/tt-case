@@ -12,7 +12,8 @@ export default new Vuetify({
         secondary: '#59A8D4',
         accent: '#C6C7F8',
         success: '#4AA785',
-        'app-black': '#1C1C1C'
+        'app-black': '#1C1C1C',
+        'surface': '#090010'
       }
     }
   }
