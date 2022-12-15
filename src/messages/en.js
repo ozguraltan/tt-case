@@ -15,5 +15,11 @@ export default {
   sortBy: 'Sort By',
   status: 'Status',
   addNewProduct: 'Add New Product',
-  search: 'Search'
+  search: 'Search',
+  pages: {
+    aviation: 'Aviation',
+    caseStudy: 'Case Study',
+    planes: 'Planes',
+    groundHandling: 'Ground Handling'
+  }
 }
