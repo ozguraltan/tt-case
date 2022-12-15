@@ -2,8 +2,11 @@ $btn-sizes: (
         'default': 40,
         'large': 54
 );
+$border-radius-root: 8px;
 $btn-border-radius: 8px !default;
 $btn-text-transform: capitalize;
 $body-font-family: 'Public Sans';
 $card-shaped-border-radius: 16px;
 $toolbar-shaped-border-radius: 16px;
+$list-dense-min-height: 36px;
+$list-item-title-font-size: 14px;

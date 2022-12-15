@@ -11,5 +11,8 @@ export default {
     pending: 'Pending',
     completed: 'Completed'
   },
-  deleteButtonText: 'Delete'
+  deleteButtonText: 'Delete',
+  sortBy: 'Sort By',
+  status: 'Status',
+  addNewProduct: 'Add New Product'
 }
