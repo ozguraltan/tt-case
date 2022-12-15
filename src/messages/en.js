@@ -4,5 +4,6 @@ export default {
   support: 'Support',
   dashboards: 'Dashboards',
   caseStudy: 'Case Study',
-  productListPageTitle: 'Our Products'
+  productListPageTitle: 'Our Products',
+  productCountText: '{count} Products'
 }

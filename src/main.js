@@ -7,6 +7,7 @@ import VueMeta from 'vue-meta'
 // App Level Styles
 import '@/scss/app.sass'
 import store from '@/store/index'
+
 Vue.use(VueMeta)
 
 new Vue({
