@@ -1,5 +1,5 @@
 <template>
-  <v-container class="pt-7">
+  <v-container>
     <v-row>
       <v-col cols="12">
         <h1 class="text-h5">{{ $t('productListPageTitle') }} </h1>
@@ -7,13 +7,22 @@
       <v-toolbar
         color="tertiary"
         shaped
-        class="px-6 mt-3"
+        class="px-3 mt-3"
         height="69"
       >
         <span class="text-h5">
           {{ productCountText }}
         </span>
       </v-toolbar>
+      <v-col cols="12" class="px-0">
+        <template v-for="item in products">
+          <ProductListCard
+            class="my-8"
+            :item="item"
+          />
+        </template>
+
+      </v-col>
     </v-row>
   </v-container>
 </template>
@@ -41,7 +50,7 @@ export default {
         id: 3,
         title: 'Product 3',
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris dictum varius molestie. Sed fringilla lectus quis est tincidunt, ut condimentum odio sodales. Vestibulum nec vehicula nibh. Etiam eu velit metus. Maecenas mollis a arcu id dictum. Nam blandit felis eu vestibulum tincidunt. Praesent faucibus elementum lacus, ut aliquam turpis.',
-        status: 'completed',
+        status: 'inProgress',
         tags: ['Frontend', 'UX']
       }
     ]
@@ -58,4 +67,7 @@ export default {
 </script>
 
 <style scoped>
+.container {
+  max-width: 1200px;
+}
 </style>

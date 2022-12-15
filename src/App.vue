@@ -5,7 +5,7 @@
 
       <AppTopbar />
 
-      <router-view></router-view>
+      <router-view class="pt-7 pb-16"></router-view>
 
       <AppFooter />
     </v-main>

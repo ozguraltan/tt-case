@@ -1,7 +1,13 @@
 <template>
-  <v-footer absolute class="app-footer" height="72" color="surface" >
+  <v-footer
+    :absolute="$vuetify.breakpoint.mdAndUp"
+    :fixed="$vuetify.breakpoint.smAndDown"
+    class="app-footer"
+    height="72"
+    color="surface"
+  >
     <v-col cols="12">
-      <div class="d-flex flex-wrap justify-space-between">
+      <div class="d-flex flex-wrap justify-space-between align-center">
         <span class="passive-text">© 2022 TAV Technologies</span>
         <div class="d-flex flex-row">
           <template v-for="item in footerLinks">
@@ -34,7 +40,7 @@ export default {
 .app-footer
   font-size: 12px
   a
-    padding: 8px
+    padding: 4px 8px
     display: block
 
 </style>
