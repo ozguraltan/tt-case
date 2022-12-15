@@ -26,21 +26,21 @@ export default {
       {
         id: 1,
         title: 'Product 1',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris dictum varius molestie. Sed fringilla lectus quis est tincidunt, ut condimentum odio sodales. Vestibulum nec vehicula nibh. Etiam eu velit metus. Maecenas mollis a arcu id dictum. Nam blandit felis eu vestibulum tincidunt. Praesent faucibus elementum lacus, ut aliquam turpis.\n'
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris dictum varius molestie. Sed fringilla lectus quis est tincidunt, ut condimentum odio sodales. Vestibulum nec vehicula nibh. Etiam eu velit metus. Maecenas mollis a arcu id dictum. Nam blandit felis eu vestibulum tincidunt. Praesent faucibus elementum lacus, ut aliquam turpis.',
         status: 'pending',
         tags: ['Frontend', 'UX', 'Bug']
       },
       {
         id: 2,
         title: 'Product 2',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris dictum varius molestie. Sed fringilla lectus quis est tincidunt, ut condimentum odio sodales. Vestibulum nec vehicula nibh. Etiam eu velit metus. Maecenas mollis a arcu id dictum. Nam blandit felis eu vestibulum tincidunt. Praesent faucibus elementum lacus, ut aliquam turpis.\n'
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris dictum varius molestie. Sed fringilla lectus quis est tincidunt, ut condimentum odio sodales. Vestibulum nec vehicula nibh. Etiam eu velit metus. Maecenas mollis a arcu id dictum. Nam blandit felis eu vestibulum tincidunt. Praesent faucibus elementum lacus, ut aliquam turpis.',
         status: 'completed',
         tags: ['UI', 'Bug']
       },
       {
         id: 3,
         title: 'Product 3',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris dictum varius molestie. Sed fringilla lectus quis est tincidunt, ut condimentum odio sodales. Vestibulum nec vehicula nibh. Etiam eu velit metus. Maecenas mollis a arcu id dictum. Nam blandit felis eu vestibulum tincidunt. Praesent faucibus elementum lacus, ut aliquam turpis.\n'
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris dictum varius molestie. Sed fringilla lectus quis est tincidunt, ut condimentum odio sodales. Vestibulum nec vehicula nibh. Etiam eu velit metus. Maecenas mollis a arcu id dictum. Nam blandit felis eu vestibulum tincidunt. Praesent faucibus elementum lacus, ut aliquam turpis.',
         status: 'completed',
         tags: ['Frontend', 'UX']
       }
