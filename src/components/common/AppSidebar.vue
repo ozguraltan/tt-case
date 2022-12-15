@@ -7,6 +7,8 @@
   >
     <v-img class="my-5" :src="logo" height="32" contain></v-img>
     <!-- -->
+    <v-subheader>Pages</v-subheader>
+    <PagesMenu />
     <v-subheader>Status</v-subheader>
     <v-list dense>
       <template v-for="status in productStatuses">
@@ -21,15 +23,15 @@
 <script>
 import productPropsMixin from '@/mixins/productPropsMixin'
 import logo from '@/img/tav-tech-logo.svg'
+import PagesMenu from '@/components/ui/PagesMenu'
 export default {
   name: 'AppSidebar',
+  components: {PagesMenu},
   mixins: [productPropsMixin],
   data: () => ({
-    logo
-  }),
-  mounted() {
-    console.log(this.$store.getters.productStatuses, 'hmmm')
-  }
+    logo,
+    active: true
+  })
 }
 </script>
 

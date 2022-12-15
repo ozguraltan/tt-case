@@ -14,5 +14,6 @@ export default {
   deleteButtonText: 'Delete',
   sortBy: 'Sort By',
   status: 'Status',
-  addNewProduct: 'Add New Product'
+  addNewProduct: 'Add New Product',
+  search: 'Search'
 }

@@ -13,7 +13,10 @@
         <span class="text-h5">
           {{ productCountText }}
         </span>
-        <v-menu nudge-bottom="30px" rounded>
+        <v-menu
+          nudge-bottom="30px"
+          rounded
+        >
           <template v-slot:activator="{ on }">
             <span
               class="ml-4 d-inline-block pa-2"
