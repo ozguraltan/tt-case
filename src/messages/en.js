@@ -34,5 +34,8 @@ export default {
     tags: 'Select Tags'
   },
   cancel: 'Cancel',
-  save: 'Save'
+  save: 'Save',
+  showMore: 'Show More',
+  selectAll: 'Select All',
+  selectNone: 'Select None'
 }

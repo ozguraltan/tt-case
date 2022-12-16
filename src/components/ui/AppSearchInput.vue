@@ -17,6 +17,7 @@ export default {
 </script>
 
 <style lang="sass">
+
 .app-search-input.v-text-field--filled.v-input--dense
   fieldset
     border-color: transparent
@@ -24,25 +25,25 @@ export default {
   &.v-input--is-focused
     fieldset
       border-color: currentColor !important
-
-  .v-input__prepend-inner
-    margin-top: 3px !important
-    padding-right: 0
-
-    .v-icon
-      font-size: 16px
-      color: rgba(255, 255, 255, 0.2)
-
-  .v-label
-    top: 3px !important
-    font-size: 14px
-    line-height: 20px
+  .v-label, .v-icon
     color: rgba(255, 255, 255, 0.4) !important
+  @media (max-width: 1441px)
+    .v-input__prepend-inner
+      margin-top: 3px !important
+      padding-right: 0
 
-  .v-label--active
-    transform: translateY(-12px) scale(0.75)
+      .v-icon
+        font-size: 16px
+        
+    .v-label
+      top: 3px !important
+      font-size: 14px
+      line-height: 20px
 
-  & > .v-input__control > .v-input__slot
-    min-height: 28px !important
-    height: 28px !important
+    .v-label--active
+      transform: translateY(-12px) scale(0.75)
+
+    & > .v-input__control > .v-input__slot
+      min-height: 28px !important
+      height: 28px !important
 </style>

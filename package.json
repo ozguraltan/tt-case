@@ -6,11 +6,14 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rimraf ./dist",
-    "start-dev": "run-p clean dev serve",
+    "start-dev": "run-s clean dev serve",
     "serve": "serve dist/",
     "dev": "webpack-dev-server --config webpack.config.js --mode development",
     "build": "cross-env NODE_ENV=production webpack --config webpack.config.js",
-    "json-server": "json-server --watch db.json --port 3009"
+    "json-server": "json-server --watch db.json --port 3009",
+    "serve-dev": "run-p dev json-server",
+    "serve-build": "run-s clean build activate-servers",
+    "activate-servers": "run-p serve json-server"
   },
   "repository": {
     "type": "git",

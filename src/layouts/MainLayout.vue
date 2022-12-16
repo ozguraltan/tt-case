@@ -4,7 +4,7 @@
 
     <AppTopbar />
 
-    <router-view class="pt-7 pb-16" :key="$route.fullPath"></router-view>
+    <router-view class="main-layout-base" :key="$route.fullPath"></router-view>
 
     <AppFooter />
   </v-main>
@@ -38,5 +38,8 @@ export default {
 </script>
 
 <style scoped>
-
+  .main-layout-base {
+    padding-top: 28px;
+    padding-bottom: 80px;
+  }
 </style>

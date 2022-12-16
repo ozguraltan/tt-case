@@ -7,12 +7,15 @@
   >
     <v-img class="my-5" :src="logo" width="172"></v-img>
     <v-subheader class="mb-2">Pages</v-subheader>
-    <PagesMenu />
-    <template v-for="filterType in filterTypes">
-      <FilterMenu
-        :key="filterType.id"
-        :filterType="filterType"
-      />
+    <PagesMenu class="mb-4"/>
+    <template v-if="$route.name === 'home'">
+      <template v-for="filterType in filterTypes">
+        <FilterMenu
+          :key="filterType.id"
+          :filterType="filterType"
+          v-model="filters[filterType.id]"
+        />
+      </template>
     </template>
   </v-navigation-drawer>
 </template>
@@ -22,14 +25,21 @@ import productPropsMixin from '@/mixins/productPropsMixin'
 import logo from '@/img/tav-tech-logo.svg'
 import PagesMenu from '@/components/ui/PagesMenu'
 import FilterMenu from '@/components/ui/FilterMenu'
+
 export default {
   name: 'AppSidebar',
   components: {FilterMenu, PagesMenu},
   mixins: [productPropsMixin],
   data: () => ({
     logo,
-    active: true
+    active: true,
+    filters: {}
   }),
+  mounted() {
+    this.filterTypes.forEach(filter => {
+      this.$set(this.filters, filter.title, [])
+    })
+  },
   computed: {
     filterTypes() {
       return [
@@ -48,8 +58,8 @@ export default {
 </script>
 
 <style lang="sass">
-  .app-sidebar
-    .v-subheader
-      height: 1rem
+.app-sidebar
+  .v-subheader
+    height: 1rem
 
 </style>

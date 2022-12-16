@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="">
     <v-row>
       <v-col cols="12">
         <h1 class="text-h5">{{ $t('productListPageTitle') }} </h1>
@@ -39,7 +39,7 @@
             </template>
           </v-list>
         </v-menu>
-        <v-spacer />
+        <v-spacer/>
         <v-btn
           color="accent"
           class="app-black--text"
@@ -49,16 +49,7 @@
         </v-btn>
       </v-toolbar>
       <v-col cols="12" class="px-0">
-        <template v-if="!loading">
-          <template v-for="item in products">
-            <ProductListCard
-              @click="formData = item"
-              class="my-8"
-              :item="item"
-            />
-          </template>
-        </template>
-        <template v-else>
+        <template v-if="loading && showLoaders">
           <v-skeleton-loader
             v-for="i in 3"
             type="image"
@@ -67,6 +58,20 @@
             :key="`skeleton-${i}`"
           />
         </template>
+        <template v-else>
+          <template v-for="item in products">
+            <ProductListCard
+              @click="openForm(item)"
+              class="my-8"
+              :item="item"
+            />
+          </template>
+        </template>
+      </v-col>
+      <v-col cols="12">
+        <v-btn block color="surface" @click="loadMoreItems" :loading="loading">
+          {{ $t('showMore') }}
+        </v-btn>
       </v-col>
     </v-row>
     <v-dialog
@@ -80,6 +85,7 @@
         v-if="dialog"
         @close="dialog = false"
         :form-data="formData"
+        @productSaved="productSaveEventHandler"
       />
     </v-dialog>
   </v-container>
@@ -87,9 +93,11 @@
 
 <script>
 import productPropsMixin from '@/mixins/productPropsMixin'
+
 const ProductForm = () => import('@/components/forms/ProductForm')
 import { sampleProductData } from '@/const/sampleData'
 import { cloneDeep } from 'lodash'
+
 export default {
   name: 'Home',
   mixins: [productPropsMixin],
@@ -99,30 +107,56 @@ export default {
   data: () => ({
     products: [],
     loading: false,
-    formData: null
+    formData: null,
+    showLoaders: true,
+    listQueryParams: {
+      params: {
+        _start: 0,
+        _limit: 3
+      }
+    }
   }),
   mounted() {
     this.getItems()
   },
   methods: {
+    openForm(item) {
+      this.formData = cloneDeep(item)
+    },
     addNewProduct() {
-      this.formData = cloneDeep(sampleProductData)
+      this.openForm(sampleProductData)
     },
     getItems() {
       this.loading = true
-      this.$api.get('products')
+      this.$api.get('products', this.listQueryParams)
         .then(response => {
-          console.log(response.data)
           this.products = this.products.concat(response.data)
         })
         .catch(error => {
           console.error(error, 'Home@getItems')
         })
         .then(() => {
-          setTimeout(() => {
+          if (this.showLoaders)
+            setTimeout(() => {
+              this.loading = false
+              this.showLoaders = false
+            }, 2000)
+          else
             this.loading = false
-          }, 2000)
         })
+    },
+    loadMoreItems() {
+      this.listQueryParams.params._start = this.productCount
+      this.getItems()
+    },
+    productSaveEventHandler($event) {
+      const index = this.products.findIndex(item => item.id === $event.id)
+      if (index >= 0)
+        this.$set(this.products, index, $event)
+      else
+        this.products.push($event)
+
+      this.formData = null
     }
   },
   computed: {

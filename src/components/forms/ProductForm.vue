@@ -10,6 +10,7 @@
         height="24"
         width="24"
         color="#736e77"
+        :loading="loading"
       >
         <v-icon size="16" color="tertiary">mdi-close</v-icon>
       </v-btn>
@@ -25,12 +26,12 @@
     <v-card-actions class="pa-5 pt-0">
       <v-row dense>
         <v-col>
-          <v-btn color="fifth" depressed block @click="close">
+          <v-btn :loading="loading" color="fifth" depressed block @click="close">
             {{ this.$t('cancel') }}
           </v-btn>
         </v-col>
         <v-col>
-          <v-btn @click="validateAndSubmit" color="accent" class="app-black--text" depressed block>
+          <v-btn :loading="loading" @click="validateAndSubmit" color="accent" class="app-black--text" depressed block>
             {{ this.$t('save') }}
           </v-btn>
         </v-col>
@@ -42,6 +43,7 @@
 <script>
 import dialogFormMixin from '@/mixins/dialogFormMixin'
 import productPropsMixin from '@/mixins/productPropsMixin'
+
 export default {
   name: 'ProductForm',
   mixins: [dialogFormMixin, productPropsMixin],
@@ -58,8 +60,25 @@ export default {
     validateAndSubmit() {
       this.$refs.form.$validator.validateAll()
         .then(v => {
-          console.log(v)
+          if (v)
+            this.submitForm()
         })
+    },
+    submitForm() {
+      this.loading = true
+      this.$api[this.httpVerb]('/products', this.formData)
+        .then(response => {
+          // for simulation real word server response behavior
+          // actually i prefer to toggle loading status on final hook
+          setTimeout(() => {
+            this.$emit('productSaved', response.data)
+            this.loading = false
+          }, 4000)
+        })
+        .catch(error => {
+          console.log(error, 'ProductForm@submitForm')
+        })
+
     }
   },
   computed: {
@@ -125,6 +144,9 @@ export default {
     },
     hasDescription() {
       return !!this.formData.description
+    },
+    httpVerb() {
+      return this.onUpdateSatege ? 'patch' : 'post'
     }
   }
 }
