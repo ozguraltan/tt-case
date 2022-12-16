@@ -14,6 +14,13 @@ export default {
           color: this.productStatusColors[id] || 'primary',
           title: this.$t(`productStatuses.${id}`)
         }))
+    },
+    productTags() {
+      return this.$store.getters.productTags
+        .map(id => ({
+          id,
+          title: id
+        }))
     }
   }
 }

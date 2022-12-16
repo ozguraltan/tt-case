@@ -40,60 +40,108 @@
           </v-list>
         </v-menu>
         <v-spacer />
-        <v-btn color="accent" class="app-black--text">
+        <v-btn
+          color="accent"
+          class="app-black--text"
+          @click="addNewProduct"
+        >
           {{ $t('addNewProduct') }}
         </v-btn>
       </v-toolbar>
       <v-col cols="12" class="px-0">
-        <template v-for="item in products">
-          <ProductListCard
-            class="my-8"
-            :item="item"
+        <template v-if="!loading">
+          <template v-for="item in products">
+            <ProductListCard
+              @click="formData = item"
+              class="my-8"
+              :item="item"
+            />
+          </template>
+        </template>
+        <template v-else>
+          <v-skeleton-loader
+            v-for="i in 3"
+            type="image"
+            class="my-2"
+            height="150"
+            :key="`skeleton-${i}`"
           />
         </template>
-
       </v-col>
     </v-row>
+    <v-dialog
+      width="445"
+      :fullscreen="$vuetify.breakpoint.smAndDown"
+      v-model="dialog"
+      :formData="formData"
+      scrollable
+    >
+      <ProductForm
+        v-if="dialog"
+        @close="dialog = false"
+        :form-data="formData"
+      />
+    </v-dialog>
   </v-container>
 </template>
 
 <script>
 import productPropsMixin from '@/mixins/productPropsMixin'
+const ProductForm = () => import('@/components/forms/ProductForm')
+import { sampleProductData } from '@/const/sampleData'
+import { cloneDeep } from 'lodash'
 export default {
   name: 'Home',
   mixins: [productPropsMixin],
+  components: {
+    ProductForm
+  },
   data: () => ({
-    products: [
-      {
-        id: 1,
-        title: 'Product 1',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris dictum varius molestie. Sed fringilla lectus quis est tincidunt, ut condimentum odio sodales. Vestibulum nec vehicula nibh. Etiam eu velit metus. Maecenas mollis a arcu id dictum. Nam blandit felis eu vestibulum tincidunt. Praesent faucibus elementum lacus, ut aliquam turpis.',
-        status: 'pending',
-        tags: ['Frontend', 'UX', 'Bug']
-      },
-      {
-        id: 2,
-        title: 'Product 2',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris dictum varius molestie. Sed fringilla lectus quis est tincidunt, ut condimentum odio sodales. Vestibulum nec vehicula nibh. Etiam eu velit metus. Maecenas mollis a arcu id dictum. Nam blandit felis eu vestibulum tincidunt. Praesent faucibus elementum lacus, ut aliquam turpis.',
-        status: 'completed',
-        tags: ['UI', 'Bug']
-      },
-      {
-        id: 3,
-        title: 'Product 3',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris dictum varius molestie. Sed fringilla lectus quis est tincidunt, ut condimentum odio sodales. Vestibulum nec vehicula nibh. Etiam eu velit metus. Maecenas mollis a arcu id dictum. Nam blandit felis eu vestibulum tincidunt. Praesent faucibus elementum lacus, ut aliquam turpis.',
-        status: 'inProgress',
-        tags: ['Frontend', 'UX']
-      }
-    ]
+    products: [],
+    loading: false,
+    formData: null
   }),
+  mounted() {
+    this.getItems()
+  },
+  methods: {
+    addNewProduct() {
+      this.formData = cloneDeep(sampleProductData)
+    },
+    getItems() {
+      this.loading = true
+      this.$api.get('products')
+        .then(response => {
+          console.log(response.data)
+          this.products = this.products.concat(response.data)
+        })
+        .catch(error => {
+          console.error(error, 'Home@getItems')
+        })
+        .then(() => {
+          setTimeout(() => {
+            this.loading = false
+          }, 2000)
+        })
+    }
+  },
   computed: {
     productCount() {
-      return 3
+      return this.products.length
     },
     productCountText() {
       return this.$t('productCountText', {count: this.productCount})
     },
+    dialog: {
+      get() {
+        return this.formData !== null
+      },
+      set(val) {
+        if (!val) {
+          this.formData = null
+        }
+      }
+    }
   }
 }
 </script>

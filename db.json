@@ -2,7 +2,7 @@
   "products": [
     {
       "id": 1,
-      "title": "roduct 1",
+      "title": "Product 1",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris dictum varius molestie. Sed fringilla lectus quis est tincidunt, ut condimentum odio sodales. Vestibulum nec vehicula nibh. Etiam eu velit metus. Maecenas mollis a arcu id dictum. Nam blandit felis eu vestibulum tincidunt. Praesent faucibus elementum lacus, ut aliquam turpis.",
       "status": "pending",
       "tags": ["Frontend", "UX", "Bug"]
@@ -23,4 +23,3 @@
     }
   ]
 }
-Æ

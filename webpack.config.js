@@ -18,7 +18,7 @@ let config = merge(baseConfig, {
   output: {
     path: path.resolve('./dist'),
     filename: '[name].[contenthash:8].js',
-    publicPath: '/dist/'
+    publicPath: '/'
   },
   module: {
     rules: [

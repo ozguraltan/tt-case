@@ -1,15 +1,10 @@
 <template>
-  <v-card color="tertiary" shaped class="justify-space-between align-center d-flex flex-row flex-wrap">
+  <v-card @click="cardClickHandler" color="tertiary" shaped
+          class="justify-space-between align-center d-flex flex-row flex-wrap">
     <v-col cols="9" lg="10">
       <v-card-title class="pt-2 pb-1">
         <h3 class="text-h6">{{ title }}</h3>
-        <span class="status-dot" :class="statusTextClasses"></span>
-        <span
-          :class="statusTextClasses"
-          class="status-text"
-        >
-        {{ status.title }}
-      </span>
+        <ProductStatusText :status="status"/>
         <div>
           <template v-for="tag in tags">
             <v-chip color="quaternary" :key="tag" label class="mx-1" small>
@@ -23,7 +18,7 @@
       </v-card-text>
     </v-col>
     <v-col cols="3" lg="2" class="text-right px-8">
-      <v-btn color="quaternary">
+      <v-btn color="quaternary" @click="$emit('deleteItem')">
         {{ $t('deleteButtonText') }}
       </v-btn>
     </v-col>
@@ -42,6 +37,15 @@ export default {
       default: () => ({})
     }
   },
+  methods: {
+    cardClickHandler($event) {
+      const isButtonClick = [...$event.target.classList].some(className => className.includes('v-btn'))
+      if (isButtonClick)
+        return
+
+      this.$emit('click')
+    }
+  },
   computed: {
     title() {
       return this.item.title
@@ -55,32 +59,11 @@ export default {
     tags() {
       return this.item.tags || []
     },
-    statusTextClasses() {
-      return `${this.status.color || 'primary'}--text`
-    },
   }
 }
 </script>
 
 <style scoped lang="sass">
-.status-dot
-  position: relative
-  display: inline-block
-  margin: 0 12px
-  &:before
-    content: ''
-    width: 5px
-    height: 5px
-    background-color: currentColor
-    border-radius: 50%
-    position: absolute
-    top: 50%
-    transform: translateY(-50%)
-
-.status-text
-  font-size: 1rem
-  margin-right: 1rem
-
 .v-card__text
   color: #aeabb0
   font-size: 1rem

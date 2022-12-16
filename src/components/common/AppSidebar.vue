@@ -3,20 +3,17 @@
     app
     width="212"
     color="surface"
-    class="app-border-right-effect app-border-color"
+    class="app-border-right-effect app-border-color app-sidebar"
   >
-    <v-img class="my-5" :src="logo" height="32" contain></v-img>
-    <!-- -->
-    <v-subheader>Pages</v-subheader>
+    <v-img class="my-5" :src="logo" width="172"></v-img>
+    <v-subheader class="mb-2">Pages</v-subheader>
     <PagesMenu />
-    <v-subheader>Status</v-subheader>
-    <v-list dense>
-      <template v-for="status in productStatuses">
-        <v-list-item :key="status.id" :color="status.color">
-          {{ status.title }}
-        </v-list-item>
-      </template>
-    </v-list>
+    <template v-for="filterType in filterTypes">
+      <FilterMenu
+        :key="filterType.id"
+        :filterType="filterType"
+      />
+    </template>
   </v-navigation-drawer>
 </template>
 
@@ -24,17 +21,35 @@
 import productPropsMixin from '@/mixins/productPropsMixin'
 import logo from '@/img/tav-tech-logo.svg'
 import PagesMenu from '@/components/ui/PagesMenu'
+import FilterMenu from '@/components/ui/FilterMenu'
 export default {
   name: 'AppSidebar',
-  components: {PagesMenu},
+  components: {FilterMenu, PagesMenu},
   mixins: [productPropsMixin],
   data: () => ({
     logo,
     active: true
-  })
+  }),
+  computed: {
+    filterTypes() {
+      return [
+        {
+          id: 'status',
+          items: this.productStatuses
+        },
+        {
+          id: 'tags',
+          items: this.productTags
+        }
+      ]
+    }
+  }
 }
 </script>
 
-<style scoped>
+<style lang="sass">
+  .app-sidebar
+    .v-subheader
+      height: 1rem
 
 </style>
