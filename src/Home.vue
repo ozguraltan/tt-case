@@ -161,10 +161,8 @@ export default {
       this.loading = true
       this.$api.get('products', this.listQueryParams)
         .then(response => {
-          if(response.data.length > 0)
             this.products = this.products.concat(response.data)
-          else
-            this.hideLoadButton = true
+            this.hideLoadButton = response.data.length === 0
         })
         .catch(error => {
           console.error(error, 'Home@getItems')
