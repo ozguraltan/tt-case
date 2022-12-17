@@ -37,5 +37,8 @@ export default {
   save: 'Save',
   showMore: 'Show More',
   selectAll: 'Select All',
-  selectNone: 'Select None'
+  selectNone: 'Select None',
+  confirmRequired: 'Confirmation Required',
+  deleteConfirmText: 'This operation can not be undone.',
+  deleteProduct: 'Delete Product',
 }

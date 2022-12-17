@@ -59,17 +59,25 @@
           />
         </template>
         <template v-else>
-          <template v-for="item in products">
+          <template v-for="(item, index) in products">
             <ProductListCard
               @click="openForm(item)"
+              @deleteItem="deleteIndex = index"
               class="my-8"
               :item="item"
+
             />
           </template>
         </template>
       </v-col>
       <v-col cols="12">
-        <v-btn block color="surface" @click="loadMoreItems" :loading="loading">
+        <v-btn
+          v-if="!hideLoadButton"
+          block
+          color="surface"
+          @click="loadMoreItems"
+          :loading="loading"
+        >
           {{ $t('showMore') }}
         </v-btn>
       </v-col>
@@ -80,6 +88,7 @@
       v-model="dialog"
       :formData="formData"
       scrollable
+      :persistent="loading"
     >
       <ProductForm
         v-if="dialog"
@@ -87,6 +96,25 @@
         :form-data="formData"
         @productSaved="productSaveEventHandler"
       />
+    </v-dialog>
+    <v-dialog
+      width="445"
+      v-model="deleteConfirmDialog"
+      :persistent="deleting"
+    >
+      <v-card color="tertiary">
+        <v-toolbar color="transparent" class="mb-2" flat>
+          <v-toolbar-title>{{ $t('confirmRequired')}}</v-toolbar-title>
+        </v-toolbar>
+        <v-card-text>
+          <p>{{ $t('deleteConfirmText') }}</p>
+        </v-card-text>
+        <v-card-actions>
+          <v-btn @click="deleteIndex = null" text color="primary">{{ $t('cancel') }}</v-btn>
+          <v-spacer />
+          <v-btn :loading="deleting" @click="deleteProduct" text color="error">{{ $t('deleteProduct') }}</v-btn>
+        </v-card-actions>
+      </v-card>
     </v-dialog>
   </v-container>
 </template>
@@ -107,6 +135,7 @@ export default {
   data: () => ({
     products: [],
     loading: false,
+    deleting: false,
     formData: null,
     showLoaders: true,
     listQueryParams: {
@@ -114,7 +143,9 @@ export default {
         _start: 0,
         _limit: 3
       }
-    }
+    },
+    deleteIndex: null,
+    hideLoadButton: false
   }),
   mounted() {
     this.getItems()
@@ -130,13 +161,17 @@ export default {
       this.loading = true
       this.$api.get('products', this.listQueryParams)
         .then(response => {
-          this.products = this.products.concat(response.data)
+          if(response.data.length > 0)
+            this.products = this.products.concat(response.data)
+          else
+            this.hideLoadButton = true
         })
         .catch(error => {
           console.error(error, 'Home@getItems')
         })
         .then(() => {
           if (this.showLoaders)
+            //for real word response simulation
             setTimeout(() => {
               this.loading = false
               this.showLoaders = false
@@ -157,6 +192,19 @@ export default {
         this.products.push($event)
 
       this.formData = null
+    },
+    deleteProduct() {
+      this.deleting = true
+
+      this.$api.delete(`products/${this.deletingProduct.id}`)
+        .then(response => {
+          //for real word response simulation
+          setTimeout(() => {
+            this.products.splice(this.deleteIndex, 1)
+            this.deleting = false
+            this.deleteIndex = null
+          }, 3000)
+        })
     }
   },
   computed: {
@@ -175,6 +223,18 @@ export default {
           this.formData = null
         }
       }
+    },
+    deleteConfirmDialog: {
+      get() {
+        return this.deleteIndex !== null
+      },
+      set(val) {
+        if(!val)
+          this.$emit('input', val)
+      }
+    },
+    deletingProduct() {
+      return this.products[this.deleteIndex] || {}
     }
   }
 }

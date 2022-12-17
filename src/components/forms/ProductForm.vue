@@ -66,7 +66,7 @@ export default {
     },
     submitForm() {
       this.loading = true
-      this.$api[this.httpVerb]('/products', this.formData)
+      this.$api[this.httpVerb](this.endpoint, this.formData)
         .then(response => {
           // for simulation real word server response behavior
           // actually i prefer to toggle loading status on final hook
@@ -147,6 +147,9 @@ export default {
     },
     httpVerb() {
       return this.onUpdateSatege ? 'patch' : 'post'
+    },
+    endpoint() {
+      return `/products${this.onUpdateSatege ? `/${this.formData.id}` : ''}`
     }
   }
 }

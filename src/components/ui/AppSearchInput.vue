@@ -34,7 +34,7 @@ export default {
 
       .v-icon
         font-size: 16px
-        
+
     .v-label
       top: 3px !important
       font-size: 14px
