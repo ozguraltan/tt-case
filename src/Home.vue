@@ -149,6 +149,7 @@ export default {
   }),
   mounted() {
     this.getItems()
+    this.$root.$on('FILTERS_UPDATE', this.filtersUpdateHandler)
   },
   methods: {
     openForm(item) {
@@ -203,6 +204,18 @@ export default {
             this.deleteIndex = null
           }, 3000)
         })
+    },
+    filtersUpdateHandler($event) {
+      this.showLoaders = true
+      this.products = []
+      this.listQueryParams.params = {
+        ...{
+          _start: 0,
+          _limit: 3
+        },
+        ...$event
+      }
+      this.getItems()
     }
   },
   computed: {

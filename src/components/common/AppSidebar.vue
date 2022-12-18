@@ -30,16 +30,22 @@ export default {
   name: 'AppSidebar',
   components: {FilterMenu, PagesMenu},
   mixins: [productPropsMixin],
+  watch: {
+    filters: {
+      deep: true,
+      handler(val) {
+        this.$root.$emit('FILTERS_UPDATE', val)
+      }
+    }
+  },
   data: () => ({
     logo,
     active: true,
-    filters: {}
+    filters: {
+      status: [],
+      tags: []
+    }
   }),
-  mounted() {
-    this.filterTypes.forEach(filter => {
-      this.$set(this.filters, filter.title, [])
-    })
-  },
   computed: {
     filterTypes() {
       return [

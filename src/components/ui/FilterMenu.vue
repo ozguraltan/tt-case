@@ -12,7 +12,7 @@
     <v-list dense>
       <v-list-item-group v-model="innerValue" multiple>
         <template v-for="item in filterItems">
-          <v-list-item @click="" :key="item.id" :color="item.color" :value="item.title">
+          <v-list-item @click="" :key="item.id" :color="item.color" :value="item.id">
             <template v-slot="{ active }">
               <v-list-item-action class="mr-2">
                 <v-checkbox
